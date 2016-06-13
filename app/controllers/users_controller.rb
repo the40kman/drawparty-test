@@ -6,15 +6,15 @@ class UsersController < ApplicationController
     @user = User.new
   end
   def create
-    @users = User.new(users_params)
+    @user = User.new(users_params)
     
     respond_to do |format|
-      if @users.save
-        format.html { redirect_to @users, notice: 'Student was successfully created.' }
-        format.json { render :show, status: :created, location: @users }
+      if @user.save
+        format.html { redirect_to @user, notice: 'Student was successfully created.' }
+        format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
-        format.json { render json: @users.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
