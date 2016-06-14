@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Workspace</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+    <title>Workspace</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
 </head>
 <body>
-
+    <div class="header navbar-fixed-top">
+        <h1>DrawParty</h1>
+        <nav>
+            <ul class ="nav navbar-nav navbar-right">
+                <li><%= link_to 'Home', "/" %></li>
+                <li><%= link_to 'Sign Up', signup_url %></li> 
+            </ul>
+        </nav>
+        
+    </div>
 <%= yield %>
 
 </body>
