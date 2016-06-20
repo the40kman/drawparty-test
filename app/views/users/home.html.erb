@@ -1,5 +1,13 @@
+
+
+
+
+
+
+
 <style>
 #canvas{crusor:crosshair !important;}
+ 
 
 </style>
 
@@ -17,7 +25,11 @@
 <input type="button" value="eraser" onClick="linecolor='white';penvalue='50'">
 <br>
 <label> Width </label>
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 6d643a6263f91cfdd67055632726d69236f2e0e6
 <input type="button" value="5" onClick="penvalue='5'">
 <input type="button" value="10" onClick="penvalue='10'">
 <input type="button" value="15" onClick="penvalue='15'">
@@ -25,28 +37,46 @@
 <input type="button" value="30" onClick="penvalue='30'">
 <input type="button" value="60" onClick="penvalue='60'">
 <br>
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 6d643a6263f91cfdd67055632726d69236f2e0e6
 </div>
 </td>
 
 <script type="text/javascript">
 
 var canvas = document.getElementById("canvas");
+<<<<<<< HEAD
 var rect = canvas.getContext("2d");
 
 
+=======
+var rect = canvas.getContext("2d");
+
+
+>>>>>>> 6d643a6263f91cfdd67055632726d69236f2e0e6
 function change()
 {
 	document.getElementById("image").src=canvas.toDataURL("image/jpg");
 }
 
+<<<<<<< HEAD
 // width of pen
+=======
+// width of pen
+>>>>>>> 6d643a6263f91cfdd67055632726d69236f2e0e6
 window.onload = function()
 {
 	var pen = document.getElementById("select");
 	pen.onchange=function()
 	{
+<<<<<<< HEAD
 		penvalue=pen.value; // penvalue=pen
+=======
+		penvalue=pen.value; // penvalue=pen
+>>>>>>> 6d643a6263f91cfdd67055632726d69236f2e0e6
 	}
 }
 
@@ -55,7 +85,11 @@ window.onload = function()
 rect.fillstyle="black";
 rect.fillRect=(0,0,800,400);
 
+<<<<<<< HEAD
 //press down
+=======
+//press down
+>>>>>>> 6d643a6263f91cfdd67055632726d69236f2e0e6
 var onoff= false;
 var oldx = -10;
 var oldy = -10;
@@ -63,6 +97,7 @@ var oldy = -10;
 var linecolor = "black"
 var penvalue = 5;
 
+<<<<<<< HEAD
 canvas.addEventListener("mousemove",draw,true);
 canvas.addEventListener("mousedown",down,false);
 canvas.addEventListener("mouseup",up,false);
@@ -78,10 +113,28 @@ function up()
 {
     onoff=false;
 }
+=======
+canvas.addEventListener("mousemove",draw,true);
+canvas.addEventListener("mousedown",down,false);
+canvas.addEventListener("mouseup",up,false);
+
+
+function down(event)
+{
+    onoff=true;
+    oldx=event.pageX-0;
+    oldy=event.pageY-170;
+}
+function up()
+{
+    onoff=false;
+}
+>>>>>>> 6d643a6263f91cfdd67055632726d69236f2e0e6
 
 
 function draw(event)
 {
+<<<<<<< HEAD
     if(onoff==true)
         {
         var newx=event.pageX-0;
@@ -98,6 +151,24 @@ function draw(event)
         oldy=newy;
         }
  }
+=======
+    if(onoff==true)
+        {
+        var newx=event.pageX-0;
+        var newy=event.pageY-170;
+        rect.beginPath();
+        rect.moveTo(oldx,oldy);
+        rect.lineTo(newx,newy);
+        rect.strokeStyle=linecolor;
+        rect.lineWidth=penvalue;
+        rect.lineCap="round";
+        rect.stroke();
+
+        oldx=newx;
+        oldy=newy;
+        }
+ }
+>>>>>>> 6d643a6263f91cfdd67055632726d69236f2e0e6
 
 
 </script>
