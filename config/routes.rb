@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
-  get 'users/help'
-  get 'users/about'
+  get 'help' => 'users#help'
+  get 'about' => 'users#about'
 
   get 'sessions/new'
 
