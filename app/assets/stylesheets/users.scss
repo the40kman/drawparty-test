@@ -1,0 +1,23 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+.signUp {
+    text-align: left;
+    margin: 0 auto;
+    width: 400px;
+}
+.field_with_errors {
+    @extend .has-error;
+    .form-control {
+        color: $state-danger-text;
+    }
+}
+body {
+    padding-top: 180px;
+    padding-left: 10px;
+}
+.header {
+    padding: 10px;
+}
