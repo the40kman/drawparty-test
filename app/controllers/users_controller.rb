@@ -5,6 +5,13 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
+
+  def help
+  end
+
+  def about
+  end
+
   def create
     @user = User.new(users_params)
 

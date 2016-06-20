@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  get 'users/help'
+  get 'users/about'
+
   get 'sessions/new'
 
   resources :users
