@@ -1,3 +1,19 @@
 <% provide(:title, 'Admin') %>
 
 <p> This page will display all user accounts </p>
+<table class = "userIndex table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Admin</th>
+    </tr>
+    <tbody>
+        <% @user.to_a.each do |user| %>
+        <tr>
+            <td><%= user.username %></td>
+            <td><%= user.email %></td>
+            <td><%= user.admin_user %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
