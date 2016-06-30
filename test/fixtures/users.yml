@@ -7,7 +7,9 @@ one:
 two:
   username: MyString
   email: MyString
+  
 michael:
-  username: Michael Example
+  username: MichaelExample
   email: michael@example.com
   password_digest: <%= User.digest('password') %>
+  admin_user: false
