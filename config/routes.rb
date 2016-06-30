@@ -2,12 +2,12 @@ Rails.application.routes.draw do
 
   get 'help' => 'users#help'
   get 'about' => 'users#about'
-
+  get 'signup' => 'users#new'
   get 'sessions/new'
 
   resources :users
   root 'users#home'
-  get 'signup' => 'users#new'
+  
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'

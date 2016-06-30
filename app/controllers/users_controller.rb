@@ -14,16 +14,17 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(users_params)
-
+    # self.admin_user = false
       if @user.save
         flash[:success] = "Profile was successfully created!"
         redirect_to @user
       else
         render 'new'
-    end
+      end
   end
   private
     def users_params
-      params.require(:user).permit(:username, :email, :password, :password_confirmation)
+      params.require(:user).permit(:username, :email, :password, :password_confirmation, :admin_user)
+      # params.admin_user = false
     end
 end
