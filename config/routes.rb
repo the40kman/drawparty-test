@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   get 'help' => 'users#help'
   get 'about' => 'users#about'
   get 'signup' => 'users#new'
-  
   root 'users#home'
   
   get 'login' => 'sessions#new'
