@@ -3,13 +3,18 @@ Rails.application.routes.draw do
   get 'help' => 'users#help'
   get 'about' => 'users#about'
   get 'signup' => 'users#new'
+  get 'admin' => 'users#admin'
   root 'users#home'
   
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
-  resources :users
-
+  
+  resources :users do
+    put 'promote'
+  end
+  get "users/:id/promote" => "users#promote", :as => "promote"
+  # match "/users/:id/promote" => "users#promote", via: :post
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

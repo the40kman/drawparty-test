@@ -6,4 +6,7 @@
 </h1>
 <p>
     <%= link_to "Edit Profile", edit_user_path(current_user) %>
+    <% if current_user.admin_user %>
+        <%= link_to "User Index", admin_url %>
+    <% end %>
 </p>

@@ -8,10 +8,11 @@ class SessionsController < ApplicationController
       log_in user
       if user.admin_user
         @user = User.all
-        render 'users/admin'
-      else
-        redirect_to user
+        # render 'users/admin'
       end
+      # else
+        redirect_to user
+      # end
     else
       flash.now[:danger] = 'Invalid email/password combination'
       render 'new'

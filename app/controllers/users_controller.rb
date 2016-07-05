@@ -1,12 +1,19 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :admin]
   before_action :correct_user,   only: [:edit, :update]
+  before_action :isadmin_user,   only: [:destroy, :promote]
 
   def show
     @user = User.find(params[:id])
   end
   def new
     @user = User.new
+  end
+  def index
+    @user = User.all
+  end
+  def admin
+    @user = User.all
   end
 
   def help
@@ -44,9 +51,20 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"
-    redirect_to users_url
+    redirect_to admin_url
   end
   
+  def promote
+    @user = User.find(params[:id])
+    if !@user.admin_user?
+      @user.update_attribute(:admin_user, true)
+      flash[:success] = "User is promoted to admin."
+    else
+      flash[:danger] = "Admins can't demote other admins."
+    end
+      redirect_to admin_url
+  end
+    
   
   private
     def users_params
@@ -65,6 +83,10 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless @user == current_user
+    end
+    
+    def isadmin_user
+      redirect_to(root_url) unless current_user.admin_user?
     end
     
 end

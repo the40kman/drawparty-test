@@ -25,3 +25,10 @@ body {
 .userIndex {
     border-collapse: collapse;
 }
+.userIndex tbody tr th {
+    text-align:center;
+    min-width: 75px;
+}
+.userIndex tbody tr td {
+    padding: 4px;
+}
