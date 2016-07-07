@@ -13,3 +13,9 @@ michael:
   email: michael@example.com
   password_digest: <%= User.digest('password') %>
   admin_user: false
+
+archer:
+  username: Sterling Archer
+  email: duchess@example.gov
+  password_digest: <%= User.digest('password') %>
+  admin_user: false

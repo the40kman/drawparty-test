@@ -34,8 +34,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
       post users_path, user: { username:  "Example User",
                                          email: "user@example.com",
                                          password:              "password",
-                                         password_confirmation: "password", 
-                                         admin_user: false }
+                                         password_confirmation: "password" } 
     end
     follow_redirect!
     assert_template 'users/show'
