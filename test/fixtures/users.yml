@@ -12,7 +12,7 @@ michael:
   username: MichaelExample
   email: michael@example.com
   password_digest: <%= User.digest('password') %>
-  admin_user: false
+  admin_user: true
 
 archer:
   username: Sterling Archer
