@@ -23,12 +23,16 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(users_params)
-
+    @user = users_params ? User.new(users_params) : User.new_guest
+      
       if @user.save
         log_in @user
-        flash[:success] = "Profile was successfully created!"
-        redirect_to @user
+        if @user.guest
+          redirect_to root_url
+        else
+          flash[:success] = "Profile was successfully created!"
+          redirect_to @user
+        end
       else
         render 'new'
       end
@@ -68,7 +72,10 @@ class UsersController < ApplicationController
   
   private
     def users_params
-      params.require(:user).permit(:username, :email, :password, :password_confirmation)
+      if params[:user]
+        params.require(:user).permit(:username, :email, :password, :password_confirmation)
+      else
+      end
     end
     
     # Confirms a logged-in user.
