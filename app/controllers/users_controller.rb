@@ -23,7 +23,13 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = users_params ? User.new(users_params) : User.new_guest
+    @user = params[:user] ? User.new(users_params) : User.new_guest
+    
+      #After guest account is made, give it a random name and email
+      if @user.guest 
+        @user.username = "Guest_" + rand(9999).to_s
+        @user.email = @user.username + "@guest.com"
+      end 
       
       if @user.save
         log_in @user

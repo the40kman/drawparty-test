@@ -5,7 +5,8 @@
     <tr>
         <th>Name</th>
         <th>Email</th>
-        <th>Admin</th>
+        <th>Account type</th>
+        <th>Created at</th>
         <th></th>
         <th></th>
         
@@ -15,7 +16,16 @@
         <tr>
             <td><%= user.username %></td>
             <td><%= user.email %></td>
-            <td><%= user.admin_user ? "TRUE" : "FALSE" %></td>
+            <td>
+                <% if user.guest %>
+                    <%= "GUEST" %>
+                <% elsif user.admin_user %>
+                    <%= "ADMIN" %>
+                <% else %>
+                    <%= "STANDARD" %>
+                <% end %>
+            </td>
+            <td><%= user.created_at %></td>
             <td>
                   <% if current_user.admin_user? && !current_user?(user) %>
                     <%= link_to "Delete", user, method: :delete,
@@ -23,7 +33,7 @@
                   <% end %>
             </td>
             <td>
-                  <% if current_user.admin_user? && !current_user?(user) %>
+                  <% if current_user.admin_user? && !current_user?(user) && !user.guest %>
                         <%= link_to "Promote to Admin", user_promote_url(user), remote: true, data: { confirm: "You sure?" } %>
                   <% end %>
             </td>

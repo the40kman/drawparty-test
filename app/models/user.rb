@@ -6,13 +6,15 @@ class User < ActiveRecord::Base
     validates :email, length: { maximum: 255 },
                      format: { with: VALID_EMAIL_REGEX },
                      uniqueness: { case_sensitive: false }, unless: :guest?
+    validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+    
     validates_presence_of :username, :email, :password_digest, unless: :guest?
     validates_uniqueness_of :username, allow_blank: true
-    validates_confirmation_of :password
+    validates_confirmation_of :password, unless: :guest?
     
     #
     has_secure_password(validations: false)
-    validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+    
     def User.digest(string)
         cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                       BCrypt::Engine.cost
@@ -20,6 +22,8 @@ class User < ActiveRecord::Base
     end
     
     def self.new_guest
-        new { |u| u.guest = true}
+        new { |u| u.guest = true
+
+        }
     end
 end

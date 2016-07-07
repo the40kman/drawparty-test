@@ -23,8 +23,14 @@
         <nav>
             <ul class ="nav navbar-nav navbar-right">
                 <% if logged_in? %>
-                    <li><%= link_to(current_user.username, user_path(current_user)) %></li>
+                    <% if current_user.guest %>
+                        <li><%= link_to(current_user.username, ) %></li>
+                    <% else %>
+                        <li><%= link_to(current_user.username, user_path(current_user)) %></li>
+                    <% end %>
+                    
                     <li><%= link_to "Log out", logout_path, method: :delete %></li>
+                
                 <% else %>
                     <li><%= link_to 'Sign Up', signup_url %></li>
                     <li><%= link_to 'Log in', login_path %></li>
