@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20160707024712) do
     t.datetime "updated_at",                      null: false
     t.string   "password_digest"
     t.boolean  "admin_user",      default: false
-    t.boolean  "guest"
+    t.boolean  "guest",           default: false
   end
 
 end
