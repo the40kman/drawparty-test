@@ -73,8 +73,8 @@ canvas.addEventListener("mouseup",up,false);
 function down(event)
 {
     onoff=true;
-    oldx=event.pageX-0;
-    oldy=event.pageY-170;
+    oldx=event.pageX-215;
+    oldy=event.pageY-256;
 }
 function up()
 {
@@ -86,8 +86,8 @@ function draw(event)
 {
     if(onoff==true)
         {
-        var newx=event.pageX-0;
-        var newy=event.pageY-170;
+        var newx=event.pageX-215;
+        var newy=event.pageY-256;
         rect.beginPath();
         rect.moveTo(oldx,oldy);
         rect.lineTo(newx,newy);
