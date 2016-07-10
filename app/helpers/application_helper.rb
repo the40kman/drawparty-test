@@ -8,5 +8,9 @@ module ApplicationHelper
         page_title + " | " + base_title
       end
     end
-    
+
+
+    def is_active?(page_name)
+  "active" if params[:action] == page_name
+end
 end
