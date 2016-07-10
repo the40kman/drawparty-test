@@ -4,12 +4,18 @@ Rails.application.routes.draw do
   get 'about' => 'users#about'
   get 'signup' => 'users#new'
   get 'admin' => 'users#admin'
+
+  get 'lobbies' => 'game_lobbies#GameOne'
+  get 'lobbies/GameTwo' => 'game_lobbies#GameTwo'
+  get 'lobbies/GameThree' => 'game_lobbies#GameThree'
+  get 'lobbies/GameFour' => 'game_lobbies#GameFour'
+
   root 'users#home'
-  
+
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
-  
+
   resources :users do
     put 'promote'
   end
