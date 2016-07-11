@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'browser' => 'browser#index'
   get 'help' => 'users#help'
   get 'about' => 'users#about'
   get 'signup' => 'users#new'
