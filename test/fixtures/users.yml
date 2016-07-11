@@ -21,3 +21,10 @@ archer:
   password_digest: <%= User.digest('password') %>
   admin_user: false
   guest: false
+  
+guestie:
+  username: Guest_1234
+  email: Guest_1234@guest.com
+  password_digest: <%= User.digest('password') %>
+  admin_user: false
+  guest: true

@@ -1,17 +1,27 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:edit, :update, :destroy]
   before_action :correct_user,   only: [:edit, :update]
-  before_action :isadmin_user,   only: [:destroy, :promote, :admin]
+  before_action :isadmin_user,   only: [:destroy, :promote, :admin, :destroy_old_guests]
+  # before_action :update,         only: [:isnotguest_user] 
 
   def show
     @user = User.find(params[:id])
+        
+    # A user cant edit or access another users page
+    unless session[:user_id] == @user.id && !@user.guest
+      flash[:danger] = "You don't have access to that page!"
+      redirect_to root_url
+    end
   end
+  
   def new
     @user = User.new
   end
+  
   def index
     @user = User.all
   end
+  
   def admin
     @user = User.all
   end
@@ -65,15 +75,22 @@ class UsersController < ApplicationController
     redirect_to admin_url
   end
   
+  def destroy_old_guests
+    User.where(guest: true).destroy_all
+    flash[:success] = "All guests deleted"
+    redirect_to admin_url
+  end
+  
   def promote
     @user = User.find(params[:id])
     if !@user.admin_user?
       @user.update_attribute(:admin_user, true)
       flash[:success] = "User is promoted to admin."
+      redirect_to admin_url
     else
       flash[:danger] = "Admins can't demote other admins."
-    end
       redirect_to admin_url
+    end
   end
     
   
@@ -104,4 +121,11 @@ class UsersController < ApplicationController
       redirect_to(root_url) unless current_user.admin_user?
     end
     
-end
+    def isnotguest_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless !current_user.guest?
+    end
+    
+    
+    
+  end
