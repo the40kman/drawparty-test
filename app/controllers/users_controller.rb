@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:edit, :update, :destroy]
   before_action :correct_user,   only: [:edit, :update]
   before_action :isadmin_user,   only: [:destroy, :promote, :admin, :destroy_old_guests]
+  # before_action :update,         only: [:isnotguest_user] 
 
   def show
     @user = User.find(params[:id])
@@ -110,5 +111,11 @@ class UsersController < ApplicationController
     def isadmin_user
       redirect_to(root_url) unless current_user.admin_user?
     end
+    def isnotguest_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless !current_user.guest?
+    end
+    
+    
     
 end

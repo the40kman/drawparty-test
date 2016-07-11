@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'help' => 'users#help'
   get 'about' => 'users#about'
   get 'signup' => 'users#new'
+  post 'signup' => 'users#create'
   get 'admin' => 'users#admin'
   root 'users#home'
   
