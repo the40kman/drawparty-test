@@ -12,8 +12,15 @@ Rails.application.routes.draw do
   
   resources :users do
     put 'promote'
+    collection do
+      get 'destroy_old_guests'
+    end
   end
   get "users/:id/promote" => "users#promote", :as => "promote"
+
+  # get "users/:id/destroy_old_guests" => "users#destroy_old_guests", :as => "destroy_old_guests"
+  # map.resources :users, :collection => { :destroy_old_guests => :get}
+  
   # match "/users/:id/promote" => "users#promote", via: :post
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

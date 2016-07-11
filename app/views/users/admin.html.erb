@@ -41,3 +41,4 @@
         <% end %>
     </tbody>
 </table>
+<%= button_to "Delete all guests", destroy_old_guests_users_path, method: :get, data: { confirm: "You sure?" }, class: "btn btn-primary" %>
