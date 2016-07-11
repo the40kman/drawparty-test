@@ -1,105 +1,132 @@
+<script src="http://cdn.pubnub.com/pubnub-3.4.4.js"></script>
 
-<style>
-#canvas{crusor:crosshair !important;}
- 
+	<section id="main">
+		<section id="colorSwatch">
+			<input type="radio" name="color" id="color01" data-color="black" checked><label for="color01">BLACK</label> 
+			<input type="radio" name="color" id="color02" data-color="blue">		<label for="color02">BLUE</label>  
+			<input type="radio" name="color" id="color03" data-color="red">	<label for="color03">RED</label>  
+			<input type="radio" name="color" id="color04" data-color="white">	<label for="color04">ERASER</label>  
+		</section>
+		Currently Online: <span id="occupancy">0</span>
+	</section>
 
-</style>
+	<canvas id="drawCanvas" width="800px" height="600px" style="border:1px solid #CCC">DrawParty is not supported on this browser!</canvas>
+	<script>
+		(function() {
+
+	var drawHistory = true;
+	var canvas = document.getElementById('drawCanvas');
+	var ctx = canvas.getContext('2d');
+	var color = document.querySelector(':checked').getAttribute('data-color');
+
+	canvas.width = 800;
+	canvas.height = 500;
+	 
+	ctx.strokeStyle = color;
+	ctx.lineWidth = '5';
+	ctx.lineCap = ctx.lineJoin = 'round';
+	
+	document.getElementById('colorSwatch').addEventListener('click', function() {
+		color = document.querySelector(':checked').getAttribute('data-color');
+	}, false);
+	
+	var isTouchSupported = 'ontouchstart' in window;
+	var isPointerSupported = navigator.pointerEnabled;
+	var isMSPointerSupported =  navigator.msPointerEnabled;
+	
+	var downEvent = isTouchSupported ? 'touchstart' : (isPointerSupported ? 'pointerdown' : (isMSPointerSupported ? 'MSPointerDown' : 'mousedown'));
+	var moveEvent = isTouchSupported ? 'touchmove' : (isPointerSupported ? 'pointermove' : (isMSPointerSupported ? 'MSPointerMove' : 'mousemove'));
+	var upEvent = isTouchSupported ? 'touchend' : (isPointerSupported ? 'pointerup' : (isMSPointerSupported ? 'MSPointerUp' : 'mouseup'));
+	 	  
+	canvas.addEventListener(downEvent, startDraw, false);
+	canvas.addEventListener(moveEvent, draw, false);
+	canvas.addEventListener(upEvent, endDraw, false);
+
+	var channel = 'draw2';
+
+	var pubnub = PUBNUB.init({
+		publish_key     : 'pub-c-c4d33e71-7da1-4133-9d09-a62c79570aa9',
+		subscribe_key   : 'sub-c-fb6688c2-3e22-11e6-9236-02ee2ddab7fe',
+		leave_on_unload : true,
+		ssl		: document.location.protocol === "https:"
+	});
+
+	pubnub.subscribe({
+		channel: channel,
+		callback: drawFromStream,
+		presence: function(m){
+
+   			document.getElementById('occupancy').textContent = m.occupancy;
+   			var p = document.getElementById('occupancy').parentNode;
+   		}
+	});
+
+	function publish(data) {
+		pubnub.publish({
+			channel: channel,
+			message: data
+		});
+     }
 
 
-<div id="draw">
-<canvas id="canvas" width="800" height="400" style="border:1px black solid;"> </canvas>
-<br>
-<label>Colors</label>
-<input class="button" type="button" value="red" onClick="linecolor='red'">
-<input type="button" value="yellow" onClick="linecolor='yellow'">
-<input type="button" value="green" onClick="linecolor='green'">
-<input type="button" value="blue" onClick="linecolor='blue'">
-<input type="button" value="black" onClick="linecolor='black'">
-<input type="button" value="purple" onClick="linecolor='purple'">
-<input type="button" value="eraser" onClick="linecolor='white';penvalue='50'">
-<br>
-<label> Width </label>
+    function drawOnCanvas(color, plots) {
+    	ctx.strokeStyle = color;
+		ctx.beginPath();
+		ctx.moveTo(plots[0].x, plots[0].y);
 
-<input type="button" value="5" onClick="penvalue='5'">
-<input type="button" value="10" onClick="penvalue='10'">
-<input type="button" value="15" onClick="penvalue='15'">
-<input type="button" value="20" onClick="penvalue='20'">
-<input type="button" value="30" onClick="penvalue='30'">
-<input type="button" value="60" onClick="penvalue='60'">
-<br>
+    	for(var i=1; i<plots.length; i++) {
+	    	ctx.lineTo(plots[i].x, plots[i].y);
+	    }
+	    ctx.stroke();
+    }
 
-</div>
-</td>
+    function drawFromStream(message) {
+		if(!message || message.plots.length < 1) return;
+		drawOnCanvas(message.color, message.plots);
+    }
+    
 
-<script type="text/javascript">
-
-var canvas = document.getElementById("canvas");
-var rect = canvas.getContext("2d");
-
-
-function change()
-{
-	document.getElementById("image").src=canvas.toDataURL("image/jpg");
-}
-
-// width of pen
-window.onload = function()
-{
-	var pen = document.getElementById("select");
-	pen.onchange=function()
-	{
-		penvalue=pen.value; // penvalue=pen
+    if(drawHistory) {
+	    pubnub.history({
+	    	channel  : channel,
+	    	count    : 25,
+	    	callback : function(messages) {
+	    		pubnub.each( messages[0], drawFromStream );
+	    	}
+	    });
 	}
-}
+    var isActive = false;
+    var plots = [];
 
+	function draw(e) {
+		e.preventDefault(); 
+	  	if(!isActive) return;
 
+    	var x = isTouchSupported ? (e.targetTouches[0].pageX - canvas.offsetLeft) : (e.offsetX || e.layerX - canvas.offsetLeft);
+    	var y = isTouchSupported ? (e.targetTouches[0].pageY - canvas.offsetTop) : (e.offsetY || e.layerY - canvas.offsetTop);
 
-rect.fillstyle="black";
-rect.fillRect=(0,0,800,400);
+    	plots.push({x: (x << 0), y: (y << 0)}); 
 
-//press down
-var onoff= false;
-var oldx = -10;
-var oldy = -10;
-//default
-var linecolor = "black"
-var penvalue = 5;
+    	drawOnCanvas(color, plots);
+	}
+	
+	function startDraw(e) {
+	  	e.preventDefault();
+	  	isActive = true;
+	}
+	
+	function endDraw(e) {
+	  	e.preventDefault();
+	  	isActive = false;
+	  
+	  	publish({
+	  		color: color,
+	  		plots: plots
+	  	});
 
-canvas.addEventListener("mousemove",draw,true);
-canvas.addEventListener("mousedown",down,false);
-canvas.addEventListener("mouseup",up,false);
+	  	plots = [];
+	}
+})();
 
-
-function down(event)
-{
-    onoff=true;
-    oldx=event.pageX-215;
-    oldy=event.pageY-256;
-}
-function up()
-{
-    onoff=false;
-}
-
-
-function draw(event)
-{
-    if(onoff==true)
-        {
-        var newx=event.pageX-215;
-        var newy=event.pageY-256;
-        rect.beginPath();
-        rect.moveTo(oldx,oldy);
-        rect.lineTo(newx,newy);
-        rect.strokeStyle=linecolor;
-        rect.lineWidth=penvalue;
-        rect.lineCap="round";
-        rect.stroke();
-
-        oldx=newx;
-        oldy=newy;
-        }
- }
-
-
-</script>
+		
+	</script>
