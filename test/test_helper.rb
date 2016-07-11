@@ -21,7 +21,7 @@ class ActiveSupport::TestCase
   end
   
   def who_is_logged_in
-    return session[:user_id] 
+    return :user_id
   end
 end
 

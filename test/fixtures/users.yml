@@ -22,7 +22,7 @@ archer:
   admin_user: false
   guest: false
   
-guest:
+guestie:
   username: Guest_1234
   email: Guest_1234@guest.com
   password_digest: <%= User.digest('password') %>

@@ -6,13 +6,22 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+        
+    # A user cant edit or access another users page
+    unless session[:user_id] == @user.id && !@user.guest
+      flash[:danger] = "You don't have access to that page!"
+      redirect_to root_url
+    end
   end
+  
   def new
     @user = User.new
   end
+  
   def index
     @user = User.all
   end
+  
   def admin
     @user = User.all
   end
@@ -111,6 +120,7 @@ class UsersController < ApplicationController
     def isadmin_user
       redirect_to(root_url) unless current_user.admin_user?
     end
+    
     def isnotguest_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless !current_user.guest?
@@ -118,4 +128,4 @@ class UsersController < ApplicationController
     
     
     
-end
+  end

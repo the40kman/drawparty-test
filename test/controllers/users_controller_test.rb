@@ -5,7 +5,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:michael)
     @other_user = users(:archer)
-    @guest_user = users(:guest)
+    @guest_user = users(:guestie)
   end
   
   test "should get home" do
@@ -46,13 +46,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert flash.empty?
     assert_redirected_to root_url
   end
-  
-  # test "should redirect edit when guest" do
-  #   log_in_as(@guest_user)
-  #   get edit_user_path(@guest_user)
-  #   assert flash.empty?
-  #   assert_redirected_to root_url
-  # end
   
   test "should redirect destroy when not logged in" do
     assert_no_difference 'User.count' do
