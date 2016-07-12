@@ -7,9 +7,7 @@
     <%= csrf_meta_tags %>
 </head>
 
-    <% flash.each do |message_type, message| %>
-       <div class="alert alert-<%= message_type %>"><%= message %></div>
-    <% end %>
+
 <body>
     <div class="header navbar-static-top">
 
@@ -37,7 +35,10 @@
             <!--</nav>-->
         </div>
     </div>
-    <div class="lobbies"> <!--yielding to lobbie views i.e. GameOne... -->
+    <% flash.each do |message_type, message| %>
+       <div class="alert alert-<%= message_type %>"><%= message %></div>
+    <% end %>
+    <div class="container"> <!--yielding to lobbie views i.e. GameOne... -->
         <%= yield %>
     </div>
 </body>

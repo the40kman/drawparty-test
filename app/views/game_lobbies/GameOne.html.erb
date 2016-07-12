@@ -1,2 +1,107 @@
 <% provide(:title, 'Game One') %>
-<p>Game one list</p>
+<h1>Singleplayer</h1>
+
+<style>
+#canvas{crusor:crosshair !important;}
+
+
+</style>
+
+
+<div id="draw">
+<canvas id="canvas" width="800" height="400" style="border:1px black solid;"> </canvas>
+<br>
+<label>Colors</label>
+<input class="button" type="button" value="red" onClick="linecolor='red'">
+<input type="button" value="yellow" onClick="linecolor='yellow'">
+<input type="button" value="green" onClick="linecolor='green'">
+<input type="button" value="blue" onClick="linecolor='blue'">
+<input type="button" value="black" onClick="linecolor='black'">
+<input type="button" value="purple" onClick="linecolor='purple'">
+<input type="button" value="eraser" onClick="linecolor='white';penvalue='50'">
+<br>
+<label> Width </label>
+
+<input type="button" value="5" onClick="penvalue='5'">
+<input type="button" value="10" onClick="penvalue='10'">
+<input type="button" value="15" onClick="penvalue='15'">
+<input type="button" value="20" onClick="penvalue='20'">
+<input type="button" value="30" onClick="penvalue='30'">
+<input type="button" value="60" onClick="penvalue='60'">
+<br>
+
+</div>
+</td>
+
+<script type="text/javascript">
+
+var canvas = document.getElementById("canvas");
+var rect = canvas.getContext("2d");
+
+
+function change()
+{
+  document.getElementById("image").src=canvas.toDataURL("image/jpg");
+}
+
+// width of pen
+window.onload = function()
+{
+  var pen = document.getElementById("select");
+  pen.onchange=function()
+  {
+    penvalue=pen.value; // penvalue=pen
+  }
+}
+
+
+
+rect.fillstyle="black";
+rect.fillRect=(0,0,800,400);
+
+//press down
+var onoff= false;
+var oldx = -10;
+var oldy = -10;
+//default
+var linecolor = "black"
+var penvalue = 5;
+
+canvas.addEventListener("mousemove",draw,true);
+canvas.addEventListener("mousedown",down,false);
+canvas.addEventListener("mouseup",up,false);
+
+
+function down(event)
+{
+  onoff=true;
+  oldx=event.pageX-215;
+  oldy=event.pageY-325;
+}
+function up()
+{
+  onoff=false;
+}
+
+
+function draw(event)
+{
+  if(onoff==true)
+    {
+      var newx=event.pageX-215;
+      var newy=event.pageY-325;
+      rect.beginPath();
+      rect.moveTo(oldx,oldy);
+      rect.lineTo(newx,newy);
+      rect.strokeStyle=linecolor;
+      rect.lineWidth=penvalue;
+      rect.lineCap="round";
+      rect.stroke();
+
+      oldx=newx;
+      oldy=newy;
+    }
+  }
+
+
+  </script>

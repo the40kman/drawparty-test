@@ -13,7 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap
 //= require_tree .
+
+
 jQuery(document).ready(function() {
   setTimeout(function() {
     var source = new EventSource('/browser');

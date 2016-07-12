@@ -22,16 +22,7 @@ html {
         color: $state-danger-text;
     }
 }
-body {
-    height: 100%;
-    
-    background: #2A388F;
-    background: -webkit-linear-gradient(-45deg, #FFFFFF, $light-color, $dark-color); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #FFFFFF, $light-color, $dark-color); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #FFFFFF, $light-color, $dark-color); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(0deg, #FFFFFF, $light-color, $dark-color); /* Standard syntax (must be last) */
-    background-repeat: no-repeat;
-}
+
 .header {
     padding: 25px 25px 0px 25px;
     background-color: rgba(255,255,255, 0.6);
@@ -63,15 +54,15 @@ body {
         border: 1px solid $dark-color;
 }
 
-.container {
-    margin-top: 10px;
-    background-color: rgba(255,255,255, 0.6);
-    width: 80%;
-    border-radius: 25px;
-    padding: 25px;
-    border: 3px solid $dark-color;
-    background:#FFF;
-}
+// .container {
+//     margin-top: 10px;
+//     background-color: rgba(255,255,255, 0.6);
+//     width: 80%;
+//     border-radius: 25px;
+//     padding: 25px;
+//     border: 3px solid $dark-color;
+//     background:#FFF;
+// }
 
 #canvas {
     background: #FFFFFF;
