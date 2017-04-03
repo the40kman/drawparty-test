@@ -1,7 +1,7 @@
 # CMPT276-Project
 Repo for Group 2 CMPT276
 
-
+Repo -> Repository?
 
 
 
@@ -16,3 +16,4 @@ iteration 2: https://docs.google.com/document/d/1O_oDP7vkQDyPu72iO1_haSd78mM-Drq
 To login as admin use
 email:    ben@gmail.com
 password: password
+
