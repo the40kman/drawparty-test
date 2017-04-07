@@ -1,14 +1,13 @@
 # CMPT276-Project
 Repo for Group 2 CMPT276
+ 
+A ruby on rails Rails web game with 4 teammates allows users to socialize and make pictures toegether.
 
-Designed a Ruby on Rails web game with 4 teammates for users to socialize and make pictures designs. 
+This web apllication is written with HTML, CSS and Javascript and stored in Heroku and Github.
 
-This web apllication is embdded with HTML, CSS and Javascript on Heroku and Github.
+The Multiplyaer mode allows multiple players play together in a single game session using the real-time PubNub API.
 
-The Multiplyaer model allows multiple players play together in a single game session using the real-time PubNub API.
-
-Log-in system and user profile enables administrator to manage the database which consists all uses' information and game status. 
-
+Log-in system and user profile enables the administrator to manage a database which consists all users' information and game status. 
 
 
 
